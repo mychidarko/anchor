@@ -38,7 +38,7 @@ class Anchor
 	 *
 	 * @param array|null $config The config to set
 	 */
-	public static function config($config = null)
+	public static function config(array $config = null)
 	{
 		if ($config === null) {
 			return static::$config;
@@ -73,7 +73,7 @@ class Anchor
    * @param string $moduleName The name of the module to check for
    * @return bool
 	 */
-	public static function checkModule($moduleName)
+	public static function checkModule(string $moduleName): bool
 	{
 		return class_exists(static::$modules[$moduleName]);
 	}
@@ -84,7 +84,7 @@ class Anchor
    * @param string $moduleName The name of the module to check for
    * @return bool
    */
-  public static function checkModuleWithWarning($moduleName)
+  public static function checkModuleWithWarning(string $moduleName): bool
   {
     if (!static::checkModule($moduleName)) {
       header('Content-Type: text/html');
@@ -102,7 +102,7 @@ class Anchor
 	 * @param array $dataSource An array of data to search through
 	 * @param string|array $item The items to return
 	 */
-	public static function deepGet($dataSource, $item = null)
+	public static function deepGet(array $dataSource, $item = null)
 	{
 		if (!$item) {
 			return $dataSource;
@@ -121,11 +121,12 @@ class Anchor
 		return $output;
 	}
 
-	/**
-	 * Generate a token for identifying your application
-	 *
-	 * @param int $strength Number of random characters to attach to token
-	 */
+    /**
+     * Generate a token for identifying your application
+     *
+     * @param int $strength Number of random characters to attach to token
+     * @throws \Exception
+     */
 	public static function generateToken(int $strength = 16): string
 	{
 		return bin2hex(static::$config['SECRET'] . '.' . random_bytes($strength));
